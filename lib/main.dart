@@ -1,5 +1,8 @@
+import 'package:e_commerce_app/renders/cartScreen.dart';
 import 'package:e_commerce_app/renders/dashboardScreen.dart';
+import 'package:e_commerce_app/renders/emptyCartScreen.dart';
 import 'package:e_commerce_app/renders/loginScreen.dart';
+import 'package:e_commerce_app/renders/productsDetailsScreen.dart';
 import 'package:e_commerce_app/renders/registrationScreen.dart';
 import 'package:e_commerce_app/renders/resetPasswordScreen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +23,9 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/reset': (context) => ResetPasswordScreen(),
         '/dashboard': (context) => DashboardScreen(),
+        '/details': (context) => ProductDetailsScreen(),
+        '/cart': (context) => CartScreen(),
+        '/empty': (context) => EmptyCartScreen(),
       },
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 const KTextColor = Color(0xFF000000);
+const kIconColor = Color(0xFF9EAABB);
+const kIconSize = 30.0;
 const kHeadingText = TextStyle(
   fontSize: 31,
   color: KTextColor,
@@ -56,5 +58,16 @@ const kDashboardHeading = TextStyle(
   fontSize: 19.0,
   fontWeight: FontWeight.w600,
 );
+const kMinusIcon = Icon(
+  Icons.remove,
+  color: Colors.white,
+  size: 10,
+);
+const kAddIcon = Icon(
+  Icons.add,
+  color: Colors.white,
+  size: 10,
+);
+const kQuantityButton = TextStyle(fontWeight: FontWeight.w600, fontSize: 16);
 const kCategoryText = TextStyle(fontWeight: FontWeight.w500, fontSize: 12);
 // const kButtonStyle = TextStyle()

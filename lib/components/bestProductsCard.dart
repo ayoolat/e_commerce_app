@@ -12,61 +12,72 @@ class BestProductsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 147,
-      height: 213,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          kcardBoxShadow,
-        ],
-      ),
-      child: Column(
-        children: [
-          Flexible(
-            flex: 1,
-            child: Image(
-              image: AssetImage(image),
-              fit: BoxFit.contain,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/details');
+      },
+      child: Container(
+        width: 147,
+        height: 213,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            kcardBoxShadow,
+          ],
+        ),
+        child: Column(
+          children: [
+            Flexible(
+              flex: 1,
+              child: Image(
+                image: AssetImage(image),
+                fit: BoxFit.contain,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Text(
-                        name,
-                        style: kNameTextStyle,
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Text(
+                            name,
+                            style: kNameTextStyle,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              amount,
+                              style: kAmountTextStyle,
+                              textAlign: TextAlign.start,
+                            ),
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          amount,
-                          style: kAmountTextStyle,
-                          textAlign: TextAlign.start,
+                    ),
+                    const Flexible(
+                      flex: 1,
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: Icon(
+                          Icons.thumb_up,
+                          size: 15,
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
-                Flexible(
-                  flex: 1,
-                  child: Container(
-                      alignment: Alignment.topRight,
-                      child: const Icon(Icons.thumb_up)),
-                )
-              ],
-            ),
-          )
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

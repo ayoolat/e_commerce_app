@@ -31,20 +31,29 @@ class BestDealsCard extends StatelessWidget {
               fit: BoxFit.contain,
             ),
           ),
-          SizedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  name,
-                  style: kNameTextStyle,
-                ),
-                Text(
-                  amount,
-                  style: kAmountTextStyle,
-                ),
-              ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      name,
+                      style: kNameTextStyle,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      amount,
+                      style: kAmountTextStyle,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Padding(
@@ -52,7 +61,9 @@ class BestDealsCard extends StatelessWidget {
             child: SizedBox(
               child: TextButton(
                 style: kCardButtonStyle,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/details');
+                },
                 child: const Text(
                   'See product',
                   style: kCardTextStyle,
