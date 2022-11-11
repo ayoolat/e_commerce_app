@@ -5,6 +5,7 @@ import 'package:e_commerce_app/renders/loginScreen.dart';
 import 'package:e_commerce_app/renders/productsDetailsScreen.dart';
 import 'package:e_commerce_app/renders/registrationScreen.dart';
 import 'package:e_commerce_app/renders/resetPasswordScreen.dart';
+import 'package:e_commerce_app/renders/settingsScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,9 +24,14 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/reset': (context) => ResetPasswordScreen(),
         '/dashboard': (context) => DashboardScreen(),
-        '/details': (context) => ProductDetailsScreen(),
-        '/cart': (context) => CartScreen(),
+        '/details': (context) => const ProductDetailsScreen(
+              id: 0,
+            ),
+        '/cart': (context) => const CartScreen(
+              id: '',
+            ),
         '/empty': (context) => EmptyCartScreen(),
+        '/settings': (context) => SettingsScreen(),
       },
     );
   }

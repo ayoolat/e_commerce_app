@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class AmountButton extends StatelessWidget {
   final Icon icon;
+  final VoidCallback onPressed;
 
-  AmountButton({required this.icon});
+  AmountButton({required this.icon, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +13,14 @@ class AmountButton extends StatelessWidget {
       height: 26,
       width: 27,
       child: TextButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              const Color(0xFF0011A8),
-            ),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(
+            const Color(0xFF0011A8),
           ),
-          onPressed: () {},
-          child: icon),
+        ),
+        onPressed: onPressed,
+        child: icon,
+      ),
     );
   }
 }

@@ -5,6 +5,8 @@ import '../components/DashboardAppBar.dart';
 import '../components/bestDealsCard.dart';
 import '../components/bestProductsCard.dart';
 import '../components/horizontalCard.dart';
+import '../interfaces/products.dart';
+import '../services/products.dart';
 import '../utils/constants.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -15,6 +17,40 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    setHorizontalCardsObject();
+    setBestDealsCard();
+    setBestProductsCard();
+  }
+
+  final Products productClass = Products();
+  List<HorizontalCard> horizontalCards = [];
+  BestDealsCard? bestDealsCard;
+  List<BestProductsCard> bestProductsCard = [];
+
+  Future setHorizontalCardsObject() async {
+    var cards = await productClass.getHorizontalCards();
+    setState(() {
+      horizontalCards = cards;
+    });
+  }
+
+  Future setBestDealsCard() async {
+    var card = await productClass.getBestDealsCard();
+    setState(() {
+      bestDealsCard = card;
+    });
+  }
+
+  Future setBestProductsCard() async {
+    var card = await productClass.getBestProductsCard();
+    setState(() {
+      bestProductsCard = card;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,21 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  HorizontalCard(
-                    image: 'images/productImage.png',
-                    name: 'Scotch Premium',
-                    amount: '\$125',
-                  ),
-                  SizedBox(
-                    width: 18,
-                  ),
-                  HorizontalCard(
-                    image: 'images/productImage.png',
-                    name: 'Scotch Premium',
-                    amount: '125',
-                  ),
-                ],
+                children: horizontalCards,
               ),
             ),
             const SizedBox(
@@ -91,10 +113,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const SizedBox(
               height: 30.0,
             ),
-            const BestDealsCard(
-              image: 'images/productImage.png',
-              name: 'Scotch Premium',
-              amount: '\$125',
+            Container(
+              child: bestDealsCard,
             ),
             const SizedBox(
               height: 30.0,
@@ -110,29 +130,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const SizedBox(
               height: 30.0,
             ),
-            Row(
-              children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      BestProductsCard(
-                        image: 'images/productImage.png',
-                        name: "Special Shirt’s",
-                        amount: '\$125',
-                      ),
-                      const SizedBox(
-                        width: 40,
-                      ),
-                      BestProductsCard(
-                        image: 'images/productImage.png',
-                        name: "Special Shirt’s",
-                        amount: '\$125',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: bestProductsCard,
+              ),
             )
           ],
         ),

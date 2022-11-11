@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../renders/productsDetailsScreen.dart';
 import '../utils/constants.dart';
 
 class BestDealsCard extends StatelessWidget {
   final String image;
   final String name;
   final String amount;
+  final int id;
 
   const BestDealsCard(
-      {required this.image, required this.name, required this.amount});
+      {required this.image,
+      required this.name,
+      required this.amount,
+      required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +30,16 @@ class BestDealsCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(
-            child: Image(
-              image: AssetImage('images/dashboardImage.png'),
-              fit: BoxFit.contain,
+          Expanded(
+            child: FadeInImage(
+              image: NetworkImage(image),
+              placeholder: AssetImage('images/dummyImage.png'),
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  'images/dummyImage.png',
+                  fit: BoxFit.fitWidth,
+                );
+              },
             ),
           ),
           Expanded(
@@ -43,12 +54,13 @@ class BestDealsCard extends StatelessWidget {
                     child: Text(
                       name,
                       style: kNameTextStyle,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      amount,
+                      '\$$amount',
                       style: kAmountTextStyle,
                     ),
                   ),
@@ -62,7 +74,12 @@ class BestDealsCard extends StatelessWidget {
               child: TextButton(
                 style: kCardButtonStyle,
                 onPressed: () {
-                  Navigator.pushNamed(context, '/details');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetailsScreen(id: id),
+                    ),
+                  );
                 },
                 child: const Text(
                   'See product',

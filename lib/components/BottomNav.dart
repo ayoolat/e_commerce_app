@@ -51,10 +51,15 @@ class BottomNav extends StatelessWidget {
               size: kIconSize,
             ),
           ),
-          const Icon(
-            Icons.person,
-            color: kIconColor,
-            size: kIconSize,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/settings');
+            },
+            child: const Icon(
+              Icons.person,
+              color: kIconColor,
+              size: kIconSize,
+            ),
           ),
         ],
       ),

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 const KTextColor = Color(0xFF000000);
 const kIconColor = Color(0xFF9EAABB);
+const kThemeColor = Color(0xFF020E8A);
+const kUserId = 13;
 const kIconSize = 30.0;
+const kDummyProductImage =
+    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freshone.com.pk%2Fdummy-product&psig=AOvVaw10mmE4J69FVQYtyIBSpr1p&ust=1668085671994000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCMCPgMGVofsCFQAAAAAdAAAAABAE';
 const kHeadingText = TextStyle(
   fontSize: 31,
   color: KTextColor,
@@ -11,7 +15,7 @@ const kHeadingText = TextStyle(
 const kLoginRegisterText = TextStyle(
     fontSize: 15,
     height: 0.1,
-    color: Color(0xFF020E8A),
+    color: kThemeColor,
     fontWeight: FontWeight.normal,
     fontFamily: 'Poppins');
 const kRegularText = TextStyle(
@@ -32,7 +36,7 @@ const kForgotPasswordText = TextStyle(
 );
 final kCardButtonStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all<Color>(
-    Color(0xFF0011A8),
+    kThemeColor,
   ),
 );
 const kCardTextStyle = TextStyle(
@@ -68,6 +72,7 @@ const kAddIcon = Icon(
   color: Colors.white,
   size: 10,
 );
+const kSettingsText = TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600);
 const kQuantityButton = TextStyle(fontWeight: FontWeight.w600, fontSize: 16);
 const kCategoryText = TextStyle(fontWeight: FontWeight.w500, fontSize: 12);
 // const kButtonStyle = TextStyle()
