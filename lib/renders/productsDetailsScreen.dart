@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../components/amountButton.dart';
+import '../interfaces/cart.dart';
 import '../interfaces/products.dart';
+import '../services/cart.dart';
 import '../services/products.dart';
 import '../utils/constants.dart';
 
@@ -19,19 +21,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    setCardDetails(widget.id);
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => setCardDetails(widget.id));
   }
 
   final Products productClass = Products();
-  late Product productDetails;
+  dynamic productDetails;
   int quantity = 1;
+  final Cart cart = Cart();
   final String text = '';
 
   setCardDetails(int id) async {
     var product = await productClass.getSingleCard(id);
-
-    print('product');
-    print(product);
     setState(() {
       productDetails = product;
     });
@@ -108,7 +109,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         icon: kAddIcon,
                         onPressed: () {
                           setState(() {
-                            quantity++;
+                            if (quantity < 10) quantity++;
                           });
                         },
                       ),
@@ -123,7 +124,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         icon: kMinusIcon,
                         onPressed: () {
                           setState(() {
-                            quantity--;
+                            if (quantity != 0) quantity--;
                           });
                         },
                       ),
@@ -136,7 +137,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/cart');
+                        if (quantity > 0) {
+                          cart.addToCart(
+                            CartItems(
+                                products: [CartProduct(productDetails.id, 1)],
+                                userId: kUserId),
+                          );
+                          Navigator.pushNamed(context, '/cart');
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(

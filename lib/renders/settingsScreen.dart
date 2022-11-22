@@ -203,7 +203,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNav(),
+      bottomNavigationBar: const BottomNav(
+        userId: '13',
+      ),
     );
   }
 }

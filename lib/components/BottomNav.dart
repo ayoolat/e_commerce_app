@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../providers/cartData.dart';
+import '../renders/cartScreen.dart';
 import '../utils/constants.dart';
 
 class BottomNav extends StatelessWidget {
-  const BottomNav({
-    Key? key,
-  }) : super(key: key);
+  final String userId;
+  const BottomNav({Key? key, required this.userId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,18 @@ class BottomNav extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/cart');
+              var cartData = CartData();
+              if (cartData.returnCart().isEmpty) {
+                Navigator.pushNamed(context, '/empty');
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        CartScreen(id: userId, cart: cartData.returnCart()),
+                  ),
+                );
+              }
             },
             child: const Icon(
               Icons.shopping_bag,

@@ -12,14 +12,17 @@ class EmptyCartScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             Image(
               image: AssetImage('images/Frame 17.png'),
+              fit: BoxFit.cover,
             ),
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNav(),
+      bottomNavigationBar: const BottomNav(
+        userId: '13',
+      ),
     );
   }
 }

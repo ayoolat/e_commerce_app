@@ -1,7 +1,10 @@
+import 'package:e_commerce_app/interfaces/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 import '../interfaces/products.dart';
+import '../providers/cartData.dart';
 import '../renders/cartScreen.dart';
 import '../services/cart.dart';
 import '../services/products.dart';
@@ -26,12 +29,18 @@ class HorizontalCard extends StatelessWidget {
   });
 
   renderPage(BuildContext context, String userId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CartScreen(id: userId),
-      ),
-    );
+    var cartData = CartData();
+    if (cartData.returnCart().isEmpty) {
+      Navigator.pushNamed(context, '/empty');
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              CartScreen(id: userId, cart: cartData.returnCart()),
+        ),
+      );
+    }
   }
 
   @override
@@ -124,8 +133,13 @@ class HorizontalCard extends StatelessWidget {
                             child: TextButton(
                               onPressed: () {
                                 String userId = kUserId.toString();
-                                cart.createCart(userId, id).then(
-                                    (res) => {renderPage(context, userId)});
+                                cart
+                                    .addToCart(
+                                      CartItems(
+                                          products: [CartProduct(id, 1)],
+                                          userId: kUserId),
+                                    )
+                                    .then((res) => renderPage(context, userId));
                               },
                               style: kCardButtonStyle,
                               child: const Text(

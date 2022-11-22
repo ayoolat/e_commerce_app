@@ -57,13 +57,14 @@ class HttpsCalls {
     try {
       Response response = await makePostHttpCall('/carts', cart);
       var jsonResponse = convert.jsonDecode(response.body);
-
+      print(jsonResponse);
       var t = jsonResponse['products'];
       var products = mapper.getMappedAllCartProductResponse(t);
-      jsonResponse['products'] = products;
+      jsonResponse['products'] = [];
 
-      print(mapper.getMappedCartResponse(jsonResponse));
-      return mapper.getMappedCartResponse(jsonResponse);
+      var res = mapper.getMappedCartResponse(jsonResponse);
+      res.products = products;
+      return res;
     } catch (e) {
       rethrow;
     }
@@ -75,16 +76,10 @@ class HttpsCalls {
 
       var jsonResponse = convert.jsonDecode(response.body);
 
-      if (jsonResponse.length == 0) {
-        Map<String, dynamic> res = {};
-        return mapper.getMappedCartResponse(res);
-      } else {
-        var t = jsonResponse[0]['products'];
-        var products = mapper.getMappedAllCartProductResponse(t);
-        CartItems mappedResponse =
-            mapper.getMappedCartResponse(jsonResponse[0]);
-        return mappedResponse;
-      }
+      var t = jsonResponse[0]['products'];
+      var products = mapper.getMappedAllCartProductResponse(t);
+      CartItems mappedResponse = mapper.getMappedCartResponse(jsonResponse[0]);
+      return mappedResponse;
     } catch (e) {
       rethrow;
     }

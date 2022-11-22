@@ -11,11 +11,12 @@ class Product {
 
   factory Product.fromJson(dynamic json) {
     return Product(
-        json['price'].toDouble(),
-        json['title'] as String,
-        json['image'] as String,
-        json['category'] as String,
-        json['description'] as String,
-        json['id'] as int);
+      json['price'].toDouble(),
+      json['title'] as String,
+      json['image'] as String,
+      json['category'] as String,
+      json['description'] as String,
+      json['id'] as int,
+    );
   }
 }

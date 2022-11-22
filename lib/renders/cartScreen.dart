@@ -1,5 +1,7 @@
+import 'package:e_commerce_app/interfaces/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../Models/cartModel.dart';
 import '../components/BottomNav.dart';
 import '../components/amountButton.dart';
 import '../services/cart.dart';
@@ -7,8 +9,10 @@ import '../utils/constants.dart';
 
 class CartScreen extends StatefulWidget {
   final String id;
+  final List<CartItems> cart;
 
-  const CartScreen({Key? key, required this.id}) : super(key: key);
+  const CartScreen({Key? key, required this.id, required this.cart})
+      : super(key: key);
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
@@ -21,22 +25,35 @@ class _CartScreenState extends State<CartScreen> {
 
   final Cart cartClass = Cart();
   List<CartProductCard> cartProductCards = [];
+  int quantity = 1;
 
-  checkCards(List<CartProductCard> cart) {
-    if (cart.isEmpty) {
-      Navigator.pushNamed(context, '/empty');
-    }
+  incrementQuantity() {
+    setState(() {
+      if (quantity < 10) quantity++;
+      print(quantity);
+    });
+  }
+
+  decrementQuantity() {
+    setState(() {
+      if (quantity != 0) quantity--;
+      print(quantity);
+    });
   }
 
   setCardDetails() async {
-    print('widget.id');
-    print(widget.id);
-    var cart = await cartClass
-        .getCart(widget.id != '' ? widget.id : kUserId.toString());
-    checkCards(cart);
-    setState(() {
-      cartProductCards = cart;
-    });
+    if (CartModel.cart.isEmpty) {
+      Navigator.pushNamed(context, '/empty');
+    } else {
+      var cart = await cartClass.getCart(
+          widget.id != '' ? widget.id : kUserId.toString(),
+          incrementQuantity,
+          decrementQuantity,
+          quantity);
+      setState(() {
+        cartProductCards = cart;
+      });
+    }
   }
 
   @override
@@ -44,7 +61,7 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 30, 0, 30),
+        padding: const EdgeInsets.fromLTRB(20, 30, 20, 10),
         child: Column(
           children: [
             const Text(
@@ -65,7 +82,10 @@ class _CartScreenState extends State<CartScreen> {
                   width: double.infinity,
                   child: TextButton(
                     onPressed: () {
-                      cartProductCards = [];
+                      setState(() {
+                        CartModel.cart = [];
+                      });
+                      Navigator.pushNamed(context, '/empty');
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
@@ -80,9 +100,10 @@ class _CartScreenState extends State<CartScreen> {
                     child: const Text(
                       'Proceed',
                       style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -91,7 +112,9 @@ class _CartScreenState extends State<CartScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNav(),
+      bottomNavigationBar: BottomNav(
+        userId: widget.id,
+      ),
     );
   }
 }
@@ -100,9 +123,17 @@ class CartProductCard extends StatelessWidget {
   final String image;
   final String name;
   final String amount;
+  final VoidCallback incrementQuantity;
+  final VoidCallback decrementQuantity;
+  int quantity = 1;
 
-  const CartProductCard(
-      {required this.image, required this.name, required this.amount});
+  CartProductCard({
+    required this.image,
+    required this.name,
+    required this.amount,
+    required this.decrementQuantity,
+    required this.incrementQuantity,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +166,7 @@ class CartProductCard extends StatelessWidget {
               Flexible(
                 flex: 6,
                 child: Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.fromLTRB(5.0, 5, 0, 0),
                   child: Column(
                     children: [
                       Align(
@@ -170,16 +201,25 @@ class CartProductCard extends StatelessWidget {
                         children: [
                           AmountButton(
                             icon: kAddIcon,
-                            onPressed: () {},
+                            onPressed: () {
+                              incrementQuantity();
+                              print('quantity');
+                              print(quantity);
+                            },
                           ),
                           const SizedBox(
                             width: 7,
                           ),
-                          const Text('5', style: kQuantityButton),
+                          Text(quantity.toString(), style: kQuantityButton),
                           const SizedBox(
                             width: 7,
                           ),
-                          AmountButton(icon: kMinusIcon, onPressed: () {}),
+                          AmountButton(
+                            icon: kMinusIcon,
+                            onPressed: () {
+                              decrementQuantity();
+                            },
+                          ),
                           const SizedBox(
                             width: 80,
                           ),

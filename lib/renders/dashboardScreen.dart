@@ -140,7 +140,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNav(),
+      bottomNavigationBar: const BottomNav(
+        userId: '13',
+      ),
     );
   }
 }
