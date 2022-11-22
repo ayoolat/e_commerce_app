@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/components/sekelton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -88,6 +89,57 @@ class BestDealsCard extends StatelessWidget {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class BestDealsCardSkeleton extends StatelessWidget {
+  const BestDealsCardSkeleton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 76,
+      width: double.infinity,
+      child: Row(
+        children: [
+          const Skeleton(
+            width: 100,
+            height: 76,
+          ),
+          const SizedBox(
+            height: 76,
+            width: 20,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Skeleton(
+                width: 100,
+                height: 10,
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Skeleton(
+                width: 30,
+                height: 10,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 76,
+            width: 20,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Skeleton(
+              width: 80,
+              height: 30,
+            ),
+          )
         ],
       ),
     );

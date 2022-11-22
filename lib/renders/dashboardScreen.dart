@@ -17,6 +17,14 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  bool isLoadingHorizontalCards = false;
+  bool isLoadingBestDealsCard = false;
+  bool isLoadingBestProductsCard = false;
+  final Products productClass = Products();
+  List<HorizontalCard> horizontalCards = [];
+  BestDealsCard? bestDealsCard;
+  List<BestProductsCard> bestProductsCard = [];
+
   @override
   void initState() {
     super.initState();
@@ -25,14 +33,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setBestProductsCard();
   }
 
-  final Products productClass = Products();
-  List<HorizontalCard> horizontalCards = [];
-  BestDealsCard? bestDealsCard;
-  List<BestProductsCard> bestProductsCard = [];
-
   Future setHorizontalCardsObject() async {
     var cards = await productClass.getHorizontalCards();
     setState(() {
+      isLoadingHorizontalCards = true;
       horizontalCards = cards;
     });
   }
@@ -40,6 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future setBestDealsCard() async {
     var card = await productClass.getBestDealsCard();
     setState(() {
+      isLoadingBestDealsCard = true;
       bestDealsCard = card;
     });
   }
@@ -47,6 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future setBestProductsCard() async {
     var card = await productClass.getBestProductsCard();
     setState(() {
+      isLoadingBestProductsCard = true;
       bestProductsCard = card;
     });
   }
@@ -93,12 +99,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               height: 30,
             ),
             SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: horizontalCards,
-              ),
-            ),
+                scrollDirection: Axis.horizontal,
+                child: isLoadingHorizontalCards
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: horizontalCards,
+                      )
+                    : const HorizontalCardsSkeleton()),
             const SizedBox(
               height: 30.0,
             ),
@@ -114,7 +121,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               height: 30.0,
             ),
             Container(
-              child: bestDealsCard,
+              child: isLoadingBestDealsCard
+                  ? bestDealsCard
+                  : const BestDealsCardSkeleton(),
             ),
             const SizedBox(
               height: 30.0,
@@ -132,10 +141,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: bestProductsCard,
-              ),
+              child: isLoadingBestProductsCard
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: bestProductsCard,
+                    )
+                  : const BestProductsCardSkeleton(),
             )
           ],
         ),

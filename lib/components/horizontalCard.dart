@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/components/sekelton.dart';
 import 'package:e_commerce_app/interfaces/cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -159,6 +160,64 @@ class HorizontalCard extends StatelessWidget {
         ),
         SizedBox(
           width: 18,
+        )
+      ],
+    );
+  }
+}
+
+class HorizontalCardsSkeleton extends StatelessWidget {
+  const HorizontalCardsSkeleton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Skeleton(
+          height: 103.0,
+          width: 104.0,
+        ),
+        const SizedBox(height: 103.0, width: 20.0),
+        Container(
+          height: 104.0,
+          width: 200.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Align(
+                alignment: Alignment.topRight,
+                child: Skeleton(
+                  height: 28.0,
+                  width: 28.0,
+                ),
+              ),
+              SizedBox(
+                height: 5.0,
+              ),
+              Skeleton(
+                height: 10.0,
+                width: 160.0,
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              Skeleton(
+                height: 10.0,
+                width: 90.0,
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Skeleton(
+                  height: 35.0,
+                  width: 75.0,
+                ),
+              )
+            ],
+          ),
         )
       ],
     );

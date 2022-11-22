@@ -14,7 +14,7 @@ class Skeleton extends StatelessWidget {
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
           color: Colors.black.withOpacity(0.04),
-          borderRadius: const BorderRadius.all(Radius.circular(2))),
+          borderRadius: const BorderRadius.all(Radius.circular(15))),
     );
   }
 }

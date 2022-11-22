@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/components/sekelton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../renders/productsDetailsScreen.dart';
@@ -100,6 +101,53 @@ class BestProductsCard extends StatelessWidget {
         ),
         const SizedBox(
           width: 40,
+        )
+      ],
+    );
+  }
+}
+
+class BestProductsCardSkeleton extends StatelessWidget {
+  const BestProductsCardSkeleton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Skeleton(
+          height: 130,
+          width: 177,
+        ),
+        const SizedBox(
+          height: 50,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Skeleton(
+                  height: 10,
+                  width: 70,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Skeleton(
+                  height: 10,
+                  width: 30,
+                ),
+              ],
+            ),
+            const SizedBox(
+              width: 30,
+            ),
+            const Skeleton(
+              height: 25,
+              width: 40,
+            ),
+          ],
         )
       ],
     );
