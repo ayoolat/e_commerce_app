@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../components/authBackground.dart';
@@ -12,9 +13,16 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final _auth = FirebaseAuth.instance;
+  late String email;
+  late String password;
+  late String firstName;
+  late String lastName;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
       body: AuthBackGround(
         child: Container(
@@ -60,24 +68,57 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 const SizedBox(
                   height: 40,
                 ),
-                RegisterLoginInput(hintText: 'First Name'),
+                RegisterLoginInput(
+                  hintText: 'First Name',
+                  obscureText: false,
+                  onChange: (value) {
+                    firstName = value;
+                  },
+                ),
                 const SizedBox(
                   height: 15,
                 ),
-                RegisterLoginInput(hintText: 'Last Name'),
+                RegisterLoginInput(
+                  hintText: 'Last Name',
+                  obscureText: false,
+                  onChange: (value) {
+                    lastName = value;
+                  },
+                ),
                 const SizedBox(
                   height: 15,
                 ),
-                RegisterLoginInput(hintText: 'Email Address'),
+                RegisterLoginInput(
+                  hintText: 'Email Address',
+                  obscureText: false,
+                  onChange: (value) {
+                    email = value;
+                  },
+                ),
                 const SizedBox(
                   height: 15,
                 ),
-                RegisterLoginInput(hintText: 'Password'),
+                RegisterLoginInput(
+                  hintText: 'Password',
+                  obscureText: true,
+                  onChange: (value) {
+                    password = value;
+                  },
+                ),
                 const SizedBox(height: 30.0),
                 AuthButton(
                   text: 'Register',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/dashboard');
+                  onPressed: () async {
+                    try {
+                      final newUser =
+                          await _auth.createUserWithEmailAndPassword(
+                              email: email, password: password);
+                      if (newUser != null) {
+                        Navigator.pushNamed(context, '/dashboard');
+                      }
+                    } catch (e) {
+                      print(e);
+                    }
                   },
                 )
               ],

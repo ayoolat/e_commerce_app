@@ -40,7 +40,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               const SizedBox(
                 height: 40,
               ),
-              RegisterLoginInput(hintText: 'Email Address'),
+              RegisterLoginInput(
+                hintText: 'Email Address',
+                obscureText: false,
+              ),
               const SizedBox(height: 30.0),
               AuthButton(
                 text: 'Submit',

@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 
 class RegisterLoginInput extends StatelessWidget {
   final String hintText;
+  final Function(String)? onChange;
+  final bool obscureText;
 
-  RegisterLoginInput({required this.hintText});
+  RegisterLoginInput(
+      {required this.hintText, this.onChange, required this.obscureText});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,9 @@ class RegisterLoginInput extends StatelessWidget {
         contentPadding: const EdgeInsets.all(12.0),
         border: InputBorder.none,
       ),
+      keyboardType: TextInputType.emailAddress,
+      obscureText: obscureText,
+      onChanged: onChange,
     );
   }
 }

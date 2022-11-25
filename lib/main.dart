@@ -7,10 +7,17 @@ import 'package:e_commerce_app/renders/productsDetailsScreen.dart';
 import 'package:e_commerce_app/renders/registrationScreen.dart';
 import 'package:e_commerce_app/renders/resetPasswordScreen.dart';
 import 'package:e_commerce_app/renders/settingsScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
